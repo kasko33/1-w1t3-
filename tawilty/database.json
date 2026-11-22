@@ -1,0 +1,94 @@
+{
+  "users": {
+    "u_cashier": {
+      "username": "cashier",
+      "password": "Cashier123",
+      "name": "الكاشير",
+      "role": "cashier"
+    },
+    "u_waiter1": {
+      "username": "waiter1",
+      "password": "Waiter123",
+      "name": "ويتر 1",
+      "role": "waiter"
+    },
+    "u_waiter2": {
+      "username": "waiter2",
+      "password": "Waiter123",
+      "name": "ويتر 2",
+      "role": "waiter"
+    }
+  },
+  "tables": {
+    "t1": {
+      "tableNumber": 1,
+      "status": "available",
+      "items": [],
+      "totalAmount": 0,
+      "occupiedAt": null
+    },
+    "t2": {
+      "tableNumber": 2,
+      "status": "available",
+      "items": [],
+      "totalAmount": 0,
+      "occupiedAt": null
+    },
+    "t3": {
+      "tableNumber": 3,
+      "status": "available",
+      "items": [],
+      "totalAmount": 0,
+      "occupiedAt": null
+    },
+    "t4": {
+      "tableNumber": 4,
+      "status": "available",
+      "items": [],
+      "totalAmount": 0,
+      "occupiedAt": null
+    },
+    "t5": {
+      "tableNumber": 5,
+      "status": "available",
+      "items": [],
+      "totalAmount": 0,
+      "occupiedAt": null
+    },
+    "t6": {
+      "tableNumber": 6,
+      "status": "available",
+      "items": [],
+      "totalAmount": 0,
+      "occupiedAt": null
+    }
+  },
+  "daily_stats": {},
+  "menu": {
+    "m1": {
+      "name": "شاي",
+      "price": 500,
+      "image": ""
+    },
+    "m2": {
+      "name": "قهوة تركية",
+      "price": 1500,
+      "image": ""
+    },
+    "m3": {
+      "name": "بيبسي",
+      "price": 1000,
+      "image": ""
+    },
+    "m4": {
+      "name": "برگر لحم",
+      "price": 7000,
+      "image": ""
+    },
+    "m5": {
+      "name": "شاورما دجاج",
+      "price": 4000,
+      "image": ""
+    }
+  }
+}
