@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#172133" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>طاولتي | تسجيل الدخول</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=1795377481" />
+</head>
+<body data-page="login">
+  <section class="login-screen">
+    <form id="loginForm" class="login-card">
+      <div class="brand brand-lg"><span class="brand-icon">▦</span> طاولتي</div>
+      <p class="muted">نظام إدارة الصالة وحجز الطاولات</p>
+      <label>اسم المستخدم
+        <input type="text" id="loginUser" required autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" dir="ltr" />
+      </label>
+      <label>كلمة المرور
+        <input type="password" id="loginPassword" required autocomplete="current-password" dir="ltr" />
+      </label>
+      <button type="submit" class="btn btn-primary btn-block" id="loginBtn">تسجيل الدخول</button>
+      <p id="loginError" class="error-text"></p>
+    </form>
+  </section>
+  <div id="toasts" class="toasts"></div>
+
+  <script>
+  window.addEventListener("error", function (e) {
+    var b = document.getElementById("fatalBox");
+    if (!b) { b = document.createElement("div"); b.id = "fatalBox"; document.body.appendChild(b); }
+    b.innerHTML = "<strong>حدث خطأ في الصفحة</strong><br>" + (e.message || "خطأ غير معروف") +
+      "<br><small>اضغط Ctrl+F5 لإعادة التحميل، وتأكد أنك استبدلت كل الملفات بالنسخة الجديدة.</small>";
+  });
+  window.addEventListener("load", function () {
+    if (!window.firebase || !firebase.database) window.dispatchEvent(new ErrorEvent("error", { message: "تعذر تحميل مكتبة Firebase — تحقق من الإنترنت" }));
+  });
+</script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+  <script src="app.js?v=1795377481"></script>
+</body>
+</html>

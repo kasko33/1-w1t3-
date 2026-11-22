@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#172133" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>طاولتي | الكاشير</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=1795377481" />
+</head>
+<body data-page="cashier">
+  <div id="appShell" class="hidden">
+    <nav class="navbar">
+      <div class="brand"><span class="brand-icon">▦</span> طاولتي <span class="role-chip">الكاشير</span></div>
+      <div class="tabs" id="sectionTabs">
+        <button class="tab active" data-sec="hall">الصالة</button>
+        <button class="tab" data-sec="menu">قائمة الأصناف</button>
+        <button class="tab" data-sec="stats">الإحصائيات</button>
+      </div>
+      <div class="user-box">
+        <span id="userLabel" class="muted"></span>
+        <button class="btn btn-ghost" id="logoutBtn">خروج</button>
+      </div>
+    </nav>
+
+    <main class="bento">
+      <section class="bento-main">
+        <div class="cashier-top">
+          <div class="tile stat-tile"><span class="muted">أرباح اليوم</span><strong id="kpiRevenue">0</strong></div>
+          <div class="tile stat-tile"><span class="muted">الحجوزات المكتملة</span><strong id="kpiBookings">0</strong></div>
+          <div class="tile stat-tile"><span class="muted">مشغولة الآن</span><strong id="kpiOccupied">0</strong></div>
+          <div class="tile stat-tile"><span class="muted">بانتظار الحساب</span><strong id="kpiBilling">0</strong></div>
+        </div>
+
+        <!-- ===== الصالة ===== -->
+        <div class="section" data-sec="hall">
+          <div class="tile tile-header">
+            <h2>حالة الطاولات لحظياً</h2>
+            <div class="legend">
+              <span><i class="dot dot-available"></i>متاحة <b id="cntAvail">0</b></span>
+              <span><i class="dot dot-occupied"></i>مشغولة <b id="cntOcc">0</b></span>
+              <span><i class="dot dot-billing"></i>بانتظار الحساب <b id="cntBill">0</b></span>
+            </div>
+          </div>
+          <div id="tablesGrid" class="tables-grid"></div>
+          <form class="tile add-table" id="addTableForm">
+            <label>رقم طاولة جديدة<input type="number" id="newTableNumber" min="1" required /></label>
+            <button class="btn btn-primary" type="submit">+ إضافة طاولة</button>
+          </form>
+        </div>
+
+        <!-- ===== قائمة الأصناف ===== -->
+        <div class="section hidden" data-sec="menu">
+          <form class="tile menu-form" id="menuForm">
+            <h2 id="menuFormTitle">إضافة صنف جديد للقائمة</h2>
+            <div class="menu-form-grid">
+              <label>اسم الصنف<input type="text" id="mName" required /></label>
+              <label>السعر<input type="number" id="mPrice" min="0" step="any" required /></label>
+              <label class="span-2">رابط الصورة<input type="url" id="mImage" placeholder="https://..." dir="ltr" /></label>
+            </div>
+            <div class="menu-form-actions">
+              <div class="img-preview" id="mPreview">🍽️</div>
+              <button class="btn btn-ghost hidden" type="button" id="menuCancel">إلغاء التعديل</button>
+              <button class="btn btn-primary" type="submit" id="menuSubmit">+ إضافة للقائمة</button>
+            </div>
+          </form>
+          <div class="tile tile-header">
+            <h2>الأصناف الثابتة</h2>
+            <span class="muted" id="menuCount"></span>
+          </div>
+          <div id="menuAdminGrid" class="menu-admin-grid"></div>
+        </div>
+
+        <!-- ===== الإحصائيات ===== -->
+        <div class="section hidden" data-sec="stats">
+          <div class="tile stats-section">
+            <div class="stats-head"><h2>الإحصائيات اليومية</h2><input type="date" id="statsDate" /></div>
+            <div class="stats-kpis">
+              <div><span class="muted">إجمالي الأرباح</span><strong id="statsRevenue">0</strong></div>
+              <div><span class="muted">عدد الحجوزات</span><strong id="statsCount">0</strong></div>
+            </div>
+            <div class="table-wrap">
+              <table class="sessions-table">
+                <thead><tr><th>الطاولة</th><th>وقت الفتح</th><th>وقت الإغلاق</th><th>الأصناف</th><th>المبلغ</th></tr></thead>
+                <tbody id="sessionsBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="bento-side tile">
+        <div id="sideEmpty" class="side-empty">
+          <div class="big-icon">🧾</div>
+          <p>اختر طاولة لعرض فاتورتها</p>
+        </div>
+        <div id="sideContent" class="hidden">
+          <div class="side-head"><h3 id="sideTitle"></h3><span id="sideStatus" class="badge"></span></div>
+          <p class="muted" id="sideTimer"></p>
+          <button class="btn btn-primary btn-block hidden" id="openTableBtn">حجز الطاولة</button>
+          <p class="muted center hidden" id="readonlyNote">الطلبات يضيفها الويتر — تظهر هنا لحظياً</p>
+          <ul id="itemsList" class="items-list"></ul>
+          <div class="total-row"><span>المجموع الكلي</span><strong id="sideTotal">0</strong></div>
+          <div class="side-actions">
+            <button class="btn btn-primary btn-block" id="checkoutBtn">تحصيل وتفريغ الطاولة</button>
+            <button class="btn btn-danger-outline btn-block" id="deleteTableBtn">حذف الطاولة</button>
+          </div>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <div id="confirmModal" class="modal hidden">
+    <div class="modal-card">
+      <h3 id="confirmTitle"></h3><p id="confirmText"></p>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" id="confirmNo">إلغاء</button>
+        <button class="btn btn-primary" id="confirmYes">تأكيد</button>
+      </div>
+    </div>
+  </div>
+  <div id="toasts" class="toasts"></div>
+
+  <script>
+  window.addEventListener("error", function (e) {
+    var b = document.getElementById("fatalBox");
+    if (!b) { b = document.createElement("div"); b.id = "fatalBox"; document.body.appendChild(b); }
+    b.innerHTML = "<strong>حدث خطأ في الصفحة</strong><br>" + (e.message || "خطأ غير معروف") +
+      "<br><small>اضغط Ctrl+F5 لإعادة التحميل، وتأكد أنك استبدلت كل الملفات بالنسخة الجديدة.</small>";
+  });
+  window.addEventListener("load", function () {
+    if (!window.firebase || !firebase.database) window.dispatchEvent(new ErrorEvent("error", { message: "تعذر تحميل مكتبة Firebase — تحقق من الإنترنت" }));
+  });
+</script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+  <script src="app.js?v=1795377481"></script>
+</body>
+</html>
